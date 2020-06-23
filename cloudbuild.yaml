@@ -1,0 +1,8 @@
+steps:
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'eu.gcr.io/billys/kenty', '.']
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'eu.gcr.io/billys/kenty']
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args: ['run', 'deploy', 'landing', '--region', 'europe-west4', '--image', 'eu.gcr.io/billys/kenty', '--platform', 'managed', '--allow-unauthenticated']
+  
