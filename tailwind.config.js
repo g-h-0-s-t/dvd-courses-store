@@ -231,6 +231,9 @@ module.exports = {
       default: '1',
     },
     fontFamily: {
+	    inter: ['Inter'],
+	    roboto: ['Roboto'],
+
       sans: [
         'system-ui',
         '-apple-system',

@@ -1,10 +1,18 @@
 import React from "react";
-
-export default function StickyNotificationBanner() {
+import { IoIosNotifications } from "react-icons/io";
+export default function StickyNotificationBanner(props: {
+  notification: boolean;
+  text: string;
+  icon?: any;
+}) {
   return (
-    <div className="bg-red-500 text-lg font-semibold">
-      Congrats South Africans!, You get 95% off All courses thanks to the new EU
-      initiative!
+    <div className="px-12 py-3 flex  bg-green-300 justify-center text-lg font-semibold text-black text-center">
+      {props.notification ? (
+        <IoIosNotifications className="text-3xl lg:text-2xl text-gray-700 mr-2" />
+      ) : (
+        props.icon
+      )}
+      <div>{props.text}</div>
     </div>
   );
 }
