@@ -1,13 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { IoMdCheckmarkCircleOutline } from "react-icons/io";
-interface Icourse {
-  course: {
-    name: string;
-    image: { filename: string; alt: string };
-    card: { header: string; description: string; price: number; tag: string };
+export interface Icourse {
+  name: string;
+  image: { filename: string; alt: string };
+  card: {
+    header: string;
+    description: string;
+    price: number;
+    tag: string;
   };
 }
-export default function Course(props: Icourse) {
+export default function Course(props: { course: Icourse; small?: boolean }) {
   return (
     <div className="max-w-sm rounded overflow-hidden shadow-lg">
       <img
@@ -20,12 +23,14 @@ export default function Course(props: Icourse) {
           <h3 className="text-xl text-gray-900 font-bold">
             {props.course.card.header}
           </h3>
-          <div className=" flex items-center px-2 text-white uppercase font-bold text-sm rounded-full bg-green-400">
-            {props.course.card.tag}
-          </div>
+          {!props.small && props.course.card.tag && (
+            <div className=" flex items-center px-2 text-white uppercase font-bold text-sm rounded-full bg-green-400">
+              {props.course.card.tag}
+            </div>
+          )}
         </div>
         <p className="text-gray-700 whitespace-no-wrap text-lg">
-          {props.course.card.description}
+          {!props.small && props.course.card.description}
         </p>
         <p className="mt-4 text-left text-2xl text-green-500 font-bold">
           <span className="text-base text-green-500 abolute top-4">R</span>
@@ -36,18 +41,26 @@ export default function Course(props: Icourse) {
             {props.course.card.price}
           </span>
         </p>
-        <div className="flex mt-4">
-          <div>
-            <a className="mr-2 px-4 py-1 rounded-lg tracking-wide uppercase font-bold bg-blue-500 text-white">
-              Buy
-            </a>
+        {!props.small && (
+          <div className="flex mt-4">
+            <div>
+              <a
+                className="mr-2 px-4 py-1 rounded-lg tracking-wide uppercase font-bold bg-blue-500 text-white text-lg"
+                href="#"
+              >
+                Buy
+              </a>
+            </div>
+            <div>
+              <a
+                className="px-4 py-1 rounded-lg tracking-wide uppercase font-bold bg-gray-300 text-gray-700 text-lg"
+                href="#"
+              >
+                Description
+              </a>
+            </div>
           </div>
-          <div>
-            <a className="px-4 py-1 rounded-lg tracking-wide uppercase font-bold bg-gray-300 text-gray-700">
-              Description
-            </a>
-          </div>
-        </div>
+        )}
         <div className="flex text-sm text-gray-500 mt-4">
           <IoMdCheckmarkCircleOutline className="mt-1 mr-2 text-green-500" />
           <p>Resla Agency Job Guarantee</p>
@@ -56,4 +69,3 @@ export default function Course(props: Icourse) {
     </div>
   );
 }
-export Icourse
