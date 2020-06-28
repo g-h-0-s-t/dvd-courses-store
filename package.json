@@ -10,20 +10,29 @@
     "@types/node": "^12.12.47",
     "@types/react": "^16.9.38",
     "@types/react-dom": "^16.9.8",
+    "@types/react-modal": "^3.10.6",
+    "@types/react-router": "^5.1.8",
+    "@types/yup": "^0.29.3",
+    "apollo-server-express": "^2.15.0",
+    "formik": "^2.1.4",
+    "mongoose": "^5.9.20",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-icons": "^3.10.0",
+    "react-modal": "^3.11.2",
+    "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
-    "typescript": "^3.7.5"
+    "typescript": "^3.7.5",
+    "yup": "^0.29.1"
   },
   "scripts": {
     "start": "npm run watch:css && react-scripts start",
     "build": "npm run build:css && react-scripts build",
-    "production": "node server.ts",
+    "production": "node src/server/index.ts",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "watch:css": "postcss src/assets/tailwind.css -o src/assets/main.css",
-    "build:css": "postcss src/assets/tailwind.css -o src/assets/main.css"
+    "watch:css": "postcss src/client/assets/tailwind.css -o src/client/assets/main.css",
+    "build:css": "postcss src/client/assets/tailwind.css -o src/client/assets/main.css"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -41,6 +50,7 @@
     ]
   },
   "devDependencies": {
+    "@types/react-router-dom": "^5.1.5",
     "autoprefixer": "^9.8.1",
     "postcss-cli": "^7.1.1",
     "tailwindcss": "^1.4.6"

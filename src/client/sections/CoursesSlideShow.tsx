@@ -17,7 +17,7 @@ export default function Courseslideshow() {
     },
     {
       id: 1,
-      name: "programming2",
+      name: "editing",
       image: { filename: "hero-2.png", alt: "programming" },
       card: {
         header: "Web Developer2",
@@ -28,7 +28,7 @@ export default function Courseslideshow() {
     },
     {
       id: 1,
-      name: "programming3",
+      name: "music",
       image: { filename: "hero-2.png", alt: "programming" },
       card: {
         header: "Web Developer3",
@@ -47,10 +47,14 @@ export default function Courseslideshow() {
   };
 
   function selectedCourse(val: number = 0): Icourse {
-    const tempClicked = val + clicked;
+    let tempClicked = val + clicked;
+    console.log(tempClicked);
     if (tempClicked === courses.length || tempClicked / -1 === courses.length) {
-      resetIndex();
-      return courses[tempClicked];
+      val === 0 && resetIndex();
+      tempClicked = val === 0 ? val + clicked : val + 0;
+      return courses[
+        tempClicked < 0 ? courses.length + tempClicked : tempClicked
+      ];
     } else {
       return courses[
         tempClicked < 0 ? courses.length + tempClicked : tempClicked
@@ -58,7 +62,7 @@ export default function Courseslideshow() {
     }
   }
   return (
-    <div className="py-8">
+    <div className="bg-gray-100 py-8">
       <div className=" font-inter mb-6 text-4xl text-center text-gray-700 capitalize font-semibold">
         Choose Your Profession
       </div>
@@ -77,7 +81,7 @@ export default function Courseslideshow() {
           <Course small course={selectedCourse(-1)} />
         </div>
         <div className="mx-12">
-          <Course course={selectedCourse()} />
+          <Course course={selectedCourse(0)} />
         </div>
         <div className=" hidden lg:block w-2/12 mx-6">
           <Course small course={selectedCourse(1)} />
@@ -91,6 +95,11 @@ export default function Courseslideshow() {
         >
           <FaChevronRight />
         </div>
+      </div>
+      <div className="mx-12 bg-blue-500 text-white text-center font-bold mt-6">
+        <a className=" py-1 uppercase tracking-wide text-xl" href="#">
+          View All Courses
+        </a>
       </div>
     </div>
   );
