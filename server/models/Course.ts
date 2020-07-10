@@ -1,36 +1,39 @@
-import { Ref, getModelForClass, prop } from "@typegoose/typegoose";
-export interface ICourse {
-  name: string;
-  image: { filename: string; alt: string };
-  card: {
-    header: string;
-    description: string;
-    price: number;
-    tag: string;
-  };
+import { getModelForClass, prop } from "@typegoose/typegoose";
+
+// Course Schema
+class FurtherInformation {
+  @prop({ required: true })
+  public icon!: any;
+  @prop({ required: true })
+  public text!: string;
 }
-class ImageSchema {
-  @prop()
-  public filename!: string;
-  @prop()
+
+class Image {
+  @prop({ required: true })
   public alt!: string;
+  @prop({ required: true })
+  public filename!: string;
 }
-class CardSchema {
-  @prop()
+
+class Card {
+  @prop({ required: true })
   public header!: string;
-  @prop()
+  @prop({ required: true })
   public description!: string;
-  @prop()
+  @prop({ required: true })
   public price!: number;
   @prop()
-  public tag?: boolean;
+  public furtherInformation?: FurtherInformation;
+  @prop({ required: true })
+  public tag?: string;
 }
-class CourseSchema {
+
+class Course {
   @prop({ unique: true })
   public name!: string;
-  @prop({ ref: CardSchema })
-  public card!: Ref<CardSchema>;
-  @prop({ ref: ImageSchema })
-  public image!: Ref<ImageSchema>;
+  @prop({ required: true })
+  public card!: Card;
+  @prop({ required: true })
+  public image!: Image;
 }
-export default getModelForClass(CourseSchema);
+export default getModelForClass(Course);

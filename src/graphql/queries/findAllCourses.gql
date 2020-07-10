@@ -1,0 +1,22 @@
+fragment CourseData on Course {
+    name
+    image {
+      filename
+      alt
+    }
+    card {
+      header
+      description
+      price
+      tag
+      furtherInformation {
+        icon
+        text
+      }
+  }
+}
+query course {
+  courseMany {
+  ...CourseData 
+  }
+}

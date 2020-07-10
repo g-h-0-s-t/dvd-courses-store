@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import heroImage from "../assets/images/hero.png";
 import heroImage2 from "../assets/images/hero-3.png";
-import Modal from "../components/CustomModal";
+import Modal from "./OfferModal";
 export default function Hero() {
   const [modalOpen, setModalOpen] = useState(false);
   const handleModalOpen = () => setModalOpen(!modalOpen);
@@ -26,7 +26,7 @@ export default function Hero() {
           </div>
           <div className="cursor-pointer mt-12 mb-8 lg:mb-2">
             <a
-              href="#"
+              href="#demo"
               onClick={handleModalOpen}
               className="cursor-pointer px-12 py-4 text-2xl lg:px-4 lg:py-2 lg:text-lg rounded uppercase text-white font-bold bg-blue-500"
             >
@@ -54,18 +54,6 @@ export default function Hero() {
               className="w-2/12 opacity-50"
               src={require("../assets/images/oxford.png")}
               alt="oxford logo"
-            />
-          </div>
-          <div className="relative w-full">
-            <img
-              className="lg:absolute lg:z-0 w-3/12 "
-              src={require("../assets/images/arrow.png")}
-              alt=""
-            />
-            <img
-              className="lg:absolute lg:mt-20"
-              src={require("../assets/images/supporters.png")}
-              alt=""
             />
           </div>
         </div>

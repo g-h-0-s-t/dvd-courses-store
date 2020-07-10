@@ -1,106 +1,59 @@
-import React, { useState, useEffect } from "react";
-import Course, { Icourse } from "../components/Course";
-import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import React from "react";
+import Course from "../components/Course";
+import { useCourseQuery } from "../graphql/types";
+import { CarouselProvider, Slider, Slide } from "pure-react-carousel";
+import "pure-react-carousel/dist/react-carousel.es.css";
+import { nullCheck } from "../utils";
 
-export default function Courseslideshow() {
-  const courses = [
-    {
-      id: 1,
-      name: "programming",
-      image: { filename: "hero-2.png", alt: "programming" },
-      card: {
-        header: "Web Developer",
-        description: "Become a hirable Web developer",
-        tag: "best seller",
-        price: 10000,
-      },
-    },
-    {
-      id: 1,
-      name: "editing",
-      image: { filename: "hero-2.png", alt: "programming" },
-      card: {
-        header: "Web Developer2",
-        description: "Become a hirable Web developer",
-        tag: "best seller",
-        price: 10000,
-      },
-    },
-    {
-      id: 1,
-      name: "music",
-      image: { filename: "hero-2.png", alt: "programming" },
-      card: {
-        header: "Web Developer3",
-        description: "Become a hirable Web developer",
-        tag: "best seller",
-        price: 10000,
-      },
-    },
-  ];
-  const [clicked, setClicked] = useState<any>(0);
-  const handleClick = (val: any) => {
-    setClicked(clicked + val);
-  };
-  const resetIndex = () => {
-    setClicked(0);
-  };
-
-  function selectedCourse(val: number = 0): Icourse {
-    let tempClicked = val + clicked;
-    console.log(tempClicked);
-    if (tempClicked === courses.length || tempClicked / -1 === courses.length) {
-      val === 0 && resetIndex();
-      tempClicked = val === 0 ? val + clicked : val + 0;
-      return courses[
-        tempClicked < 0 ? courses.length + tempClicked : tempClicked
-      ];
-    } else {
-      return courses[
-        tempClicked < 0 ? courses.length + tempClicked : tempClicked
-      ];
-    }
-  }
+import { useWindowDimensions } from "../hooks";
+export default function CourseSlideshow() {
+  const { data, loading } = useCourseQuery();
+  const { width } = useWindowDimensions();
   return (
     <div className="bg-gray-100 py-8">
       <div className=" font-inter mb-6 text-4xl text-center text-gray-700 capitalize font-semibold">
         Choose Your Profession
       </div>
-      <div className="flex items-center justify-center text-2xl">
+      {data && nullCheck(data.courseMany) ? (
+        <div id="success">
+          <div className="flex items-center justify-center text-2xl">
+            <CarouselProvider
+              naturalSlideHeight={width > 1000 ? 500 : 350}
+              naturalSlideWidth={400}
+              totalSlides={data.courseMany.length || 0}
+              visibleSlides={width > 1000 ? 3 : 1}
+              className="w-full"
+            >
+              <Slider>
+                {data.courseMany.map((course, index) => (
+                  <Slide key={index} index={index}>
+                    <div className="bg-gray-100 flex justify-center pb-24">
+                      <Course course={course} />
+                    </div>
+                  </Slide>
+                ))}
+              </Slider>
+            </CarouselProvider>
+          </div>
+          <div className="mx-12 bg-blue-500 text-white text-center font-bold mt-6">
+            <a
+              className=" py-1 uppercase tracking-wide text-xl"
+              href="#viewallcourses"
+            >
+              View All Courses
+            </a>
+          </div>
+        </div>
+      ) : !loading ? (
         <div
-          data-val={-1}
-          onClick={(event) =>
-            event.currentTarget.dataset.val &&
-            handleClick(parseInt(event.currentTarget.dataset.val))
-          }
-          className=""
+          id="error"
+          className="text-center bg-white border-l-8 rounded-lg border-red-500 mx-20 lg:mx-64 lg:mt-20 px-12 py-4"
         >
-          <FaChevronLeft />
+          Something went wrong, please try again later.{" "}
         </div>
-        <div className="hidden lg:block w-2/12 mx-6">
-          <Course small course={selectedCourse(-1)} />
-        </div>
-        <div className="mx-12">
-          <Course course={selectedCourse(0)} />
-        </div>
-        <div className=" hidden lg:block w-2/12 mx-6">
-          <Course small course={selectedCourse(1)} />
-        </div>
-        <div
-          data-val={1}
-          onClick={(event) =>
-            event.currentTarget.dataset.val &&
-            handleClick(parseInt(event.currentTarget.dataset.val))
-          }
-        >
-          <FaChevronRight />
-        </div>
-      </div>
-      <div className="mx-12 bg-blue-500 text-white text-center font-bold mt-6">
-        <a className=" py-1 uppercase tracking-wide text-xl" href="#">
-          View All Courses
-        </a>
-      </div>
+      ) : (
+        <div className="text-center">Loading</div>
+      )}
     </div>
   );
 }
